@@ -12,9 +12,9 @@ export const HOME_USER = {
 };
 
 export const HOME_BALANCE = {
-  ammount: 128.45,
+  amount: 1228.45,
   currency: "USD",
-  nextRenewalDatte: "2026-08-19T00:00:00Z",
+  nextRenewalDate: "2026-08-19T00:00:00Z",
 };
 
 export const HOME_SUBSCRIPTIONS: Subscription[] = [

@@ -50,6 +50,9 @@
   .tabs-active {
     @apply bg-accent;
   }
+  .tabs-inactive {
+    @apply bg-white text-white;
+  }
 
   .tabs-glyph {
     @apply size-2 text-primary;

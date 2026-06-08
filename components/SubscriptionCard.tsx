@@ -1,4 +1,4 @@
-import { formatCurrency } from "@/lib/utils";
+import { formatCurrency, formatSubscriptionDateTime } from "@/lib/utils";
 import clsx from "clsx";
 import React from "react";
 import { Image, Pressable, Text, View } from "react-native";
@@ -15,11 +15,9 @@ const SubscriptionCard = ({
   renewalDate,
   expanded,
   onPress,
+  paymentMethod,
+  status,
 }: SubscriptionCardProps) => {
-  function formatSubscriptionDate(renewalDate: any): React.ReactNode {
-    throw new Error("Function not implemented.");
-  }
-
   return (
     <Pressable
       onPress={onPress}
@@ -47,8 +45,61 @@ const SubscriptionCard = ({
       </View>
 
       {expanded && (
-        <View className="sub-expanded">
-          <Text className="sub-expanded-text">Expanded content here</Text>
+        <View className="sub-body">
+          <View className="sub-body-row">
+            <Text className="sub-label">Payment: </Text>
+            <Text className="sub-value" numberOfLines={1} ellipsizeMode="tail">
+              {paymentMethod?.trim()}
+            </Text>
+          </View>
+          <View className="sub-body">
+            <View className="sub-body-row">
+              <Text className="sub-label">Category: </Text>
+              <Text
+                className="sub-value"
+                numberOfLines={1}
+                ellipsizeMode="tail"
+              >
+                {category?.trim()}
+              </Text>
+            </View>
+          </View>
+          <View className="sub-body">
+            <View className="sub-body-row">
+              <Text className="sub-label">Plan: </Text>
+              <Text
+                className="sub-value"
+                numberOfLines={1}
+                ellipsizeMode="tail"
+              >
+                {plan?.trim()}
+              </Text>
+            </View>
+          </View>
+          <View className="sub-body">
+            <View className="sub-body-row">
+              <Text className="sub-label">Status: </Text>
+              <Text
+                className="sub-value"
+                numberOfLines={1}
+                ellipsizeMode="tail"
+              >
+                {status?.trim()}
+              </Text>
+            </View>
+          </View>
+          <View className="sub-body">
+            <View className="sub-body-row">
+              <Text className="sub-label">Renewal Date: </Text>
+              <Text
+                className="sub-value"
+                numberOfLines={1}
+                ellipsizeMode="tail"
+              >
+                {renewalDate ? formatSubscriptionDateTime(renewalDate) : ""}
+              </Text>
+            </View>
+          </View>
         </View>
       )}
     </Pressable>

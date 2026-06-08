@@ -203,4 +203,16 @@
   .sub-billing {
     @apply mt-0.5 text-xs font-sans-medium text-muted-foreground;
   }
+  .sub-body {
+    @apply mt-4 rounded-2xl bg-muted p-4;
+  }
+  .sub-body-row {
+    @apply flex-row items-center gap-2;
+  }
+  .sub-label {
+    @apply text-sm font-sans-medium text-primary;
+  }
+  .sub-value {
+    @apply text-sm font-sans-medium text-muted-foreground;
+  }
 }

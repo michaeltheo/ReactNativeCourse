@@ -23,59 +23,74 @@ export default function App() {
   const [expandedSubId, setExpandedSubId] = React.useState<string | null>(null);
   return (
     <SafeAreaView className="flex-1 bg-background p-5">
-      <View className="home-header">
-        <View className="home-user">
-          <Image source={images.avatar} className="home-avatar" />
-          <Text className="home-user-name">{HOME_USER.name}</Text>
-        </View>
+      <FlatList
+        ListHeaderComponent={() => (
+          <>
+            <View className="home-header">
+              <View className="home-user">
+                <Image source={images.avatar} className="home-avatar" />
+                <Text className="home-user-name">{HOME_USER.name}</Text>
+              </View>
 
-        <Image source={icons.add} className="home-add-icon w-6 h-6" />
-      </View>
+              <Image source={icons.add} className="home-add-icon w-6 h-6" />
+            </View>
 
-      <View className="home-balance-card">
-        <Text className="home-balance-label">Total Balance</Text>
+            <View className="home-balance-card">
+              <Text className="home-balance-label">Total Balance</Text>
 
-        <View className="home-balance-row">
-          <Text className="home-balance-amount">
-            {formatCurrency(HOME_BALANCE.amount)}
+              <View className="home-balance-row">
+                <Text className="home-balance-amount">
+                  {formatCurrency(HOME_BALANCE.amount)}
+                </Text>
+                <Text className="home-balance-date">
+                  {dayjs(HOME_BALANCE.nextRenewalDate).format("MM/DD")}
+                </Text>
+              </View>
+            </View>
+
+            <View>
+              <ListHeading title="Upcoming Subscriptions" />
+              <FlatList
+                data={UPCOMING_SUBSCRIPTIONS}
+                renderItem={({ item }) => (
+                  <UpcomingSubscriptionCard {...item} />
+                )}
+                keyExtractor={(item) => item.id}
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                className="mt-4 mb-6"
+                ListEmptyComponent={() => (
+                  <Text className="text-center text-gray-500 mt-4">
+                    No upcoming subscriptions
+                  </Text>
+                )}
+              />
+            </View>
+            <ListHeading title="All Subscriptions" />
+          </>
+        )}
+        data={HOME_SUBSCRIPTIONS}
+        renderItem={({ item }) => (
+          <SubscriptionCard
+            {...item}
+            expanded={expandedSubId === item.id}
+            onPress={() => {
+              setExpandedSubId(expandedSubId === item.id ? null : item.id);
+            }}
+          />
+        )}
+        keyExtractor={(item) => item.id}
+        showsVerticalScrollIndicator={false}
+        ItemSeparatorComponent={() => <View className="h-3" />}
+        extraData={expandedSubId}
+        className="mt-4"
+        ListEmptyComponent={() => (
+          <Text className="text-center text-gray-500 mt-4">
+            No subscriptions
           </Text>
-          <Text className="home-balance-date">
-            {dayjs(HOME_BALANCE.nextRenewalDate).format("MM/DD")}
-          </Text>
-        </View>
-      </View>
-
-      <View>
-        <ListHeading title="Upcoming Subscriptions" />
-        <FlatList
-          data={UPCOMING_SUBSCRIPTIONS}
-          renderItem={({ item }) => <UpcomingSubscriptionCard {...item} />}
-          keyExtractor={(item) => item.id}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          className="mt-4 mb-6"
-          ListEmptyComponent={() => (
-            <Text className="text-center text-gray-500 mt-4">
-              No upcoming subscriptions
-            </Text>
-          )}
-        />
-      </View>
-
-      <View>
-        <ListHeading title="All Subscriptions" />
-        <SubscriptionCard
-          {...HOME_SUBSCRIPTIONS[0]}
-          expanded={expandedSubId === HOME_SUBSCRIPTIONS[0].id}
-          onPress={() => {
-            setExpandedSubId(
-              expandedSubId === HOME_SUBSCRIPTIONS[0].id
-                ? null
-                : HOME_SUBSCRIPTIONS[0].id,
-            );
-          }}
-        />
-      </View>
+        )}
+        contentContainerClassName="pb-20"
+      />
     </SafeAreaView>
   );
 }

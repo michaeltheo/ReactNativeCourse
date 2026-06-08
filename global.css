@@ -52,6 +52,6 @@
   }
 
   .tabs-glyph {
-    @apply text-primary;
+    @apply size-2 text-primary;
   }
 }
